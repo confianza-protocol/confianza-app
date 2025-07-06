@@ -10,3 +10,6 @@ Sentry.init({
   // Simplified integrations for better performance
   integrations: [],
 })
+
+// Export router transition hook as required by Sentry
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

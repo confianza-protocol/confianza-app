@@ -161,15 +161,6 @@
   .container-narrow {
     @apply max-w-2xl mx-auto px-4 sm:px-6 lg:px-8;
   }
-  
-  /* Animation Classes */
-  .animate-in {
-    @apply animate-fade-in;
-  }
-  
-  .animate-slide-up {
-    @apply animate-slide-up;
-  }
 }
 
 @layer utilities {

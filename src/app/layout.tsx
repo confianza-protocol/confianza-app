@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -8,6 +9,8 @@ import * as Sentry from '@sentry/nextjs'
 import { cookies } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export function generateMetadata(): Metadata {
   return {
@@ -38,8 +41,8 @@ export default async function RootLayout({
   } = await supabase.auth.getUser()
 
   return (
-    <html lang="en">
-      <body className="min-h-screen flex flex-col bg-background text-text-primary font-sans">
+    <html lang="en" className="dark">
+      <body className={`${inter.className} min-h-screen flex flex-col bg-background text-text-primary`}>
         <ErrorBoundary>
           <Navbar user={user} />
           <main className="flex-grow">
