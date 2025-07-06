@@ -1,0 +1,12 @@
+{
+  "name": "confianza-testnet-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The safest way to buy and sell crypto in Latin America",
+  "keywords": ["crypto", "p2p", "latin-america", "blockchain", "trust", "trading"],
+  "author": "Confianza Protocol",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.3"
+  }
+}
