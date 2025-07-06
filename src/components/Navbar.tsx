@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import AuthButton from '@/components/auth/AuthButton'
 
-export default function Navbar() {
+export default async function Navbar() {
   const supabase = createClient()
   const {
     data: { user },
