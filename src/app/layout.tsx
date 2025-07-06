@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import LayoutContent from '@/components/LayoutContent'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import { createClient } from '@/lib/supabase/server'
 import * as Sentry from '@sentry/nextjs'
 
 export const dynamic = 'force-dynamic'
@@ -31,13 +33,20 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const supabase = createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <ErrorBoundary>
-          <LayoutContent>
+          <Navbar user={user} />
+          <main className="flex-grow">
             {children}
-          </LayoutContent>
+          </main>
+          <Footer />
         </ErrorBoundary>
       </body>
     </html>
