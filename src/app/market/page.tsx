@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { Metadata } from 'next'
 import OfferCard from '@/components/market/OfferCard'
@@ -10,8 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function MarketPage() {
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+  const supabase = createClient()
   
   // Fetch active offers with seller profile and trust score
   const { data: offers, error } = await supabase
