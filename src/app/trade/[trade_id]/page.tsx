@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import LiveTradeInterface from '@/components/trade/LiveTradeInterface'
+import { cookies } from 'next/headers'
 
 interface TradePageProps {
   params: {
@@ -15,7 +16,8 @@ export const metadata: Metadata = {
 }
 
 export default async function TradePage({ params }: TradePageProps) {
-  const supabase = createClient()
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   
   const {
     data: { user },

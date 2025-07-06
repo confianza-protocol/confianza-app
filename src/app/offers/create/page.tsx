@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import CreateOfferForm from '@/components/offers/CreateOfferForm'
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: 'Create Offer - Confianza',
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateOfferPage() {
-  const supabase = createClient()
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   
   const {
     data: { user },

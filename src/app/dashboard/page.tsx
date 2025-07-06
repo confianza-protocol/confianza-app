@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import TradeStatusBadge from '@/components/trade/TradeStatusBadge'</parameter>
+import { cookies } from 'next/headers'
 
 export const metadata: Metadata = {
   title: 'Dashboard - Confianza',
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 }
 
 export default async function DashboardPage() {
-  const supabase = createClient()
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   
   const {
     data: { user },
