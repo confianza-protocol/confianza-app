@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   }
 
   // Fetch user profile and trust score
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select(`
       *,
@@ -28,6 +28,10 @@ export default async function DashboardPage() {
     `)
     .eq('id', user.id)
     .single()
+
+  if (profileError) {
+    console.error('Error fetching profile:', profileError)
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 
 export default function LoginForm() {
@@ -11,12 +11,26 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
+
+    // Basic validation
+    if (!email || !password) {
+      setError('Please fill in all fields')
+      setLoading(false)
+      return
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError('Please enter a valid email address')
+      setLoading(false)
+      return
+    }
 
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -27,7 +41,8 @@ export default function LoginForm() {
       if (error) {
         setError(error.message)
       } else {
-        router.push('/dashboard')
+        const redirectTo = searchParams.get('redirectTo') || '/dashboard'
+        router.push(redirectTo)
         router.refresh()
       }
     } catch (err) {

@@ -73,13 +73,18 @@ All tables have comprehensive Row Level Security (RLS) policies implemented.
    - Copy your project URL and anon key
 
 4. **Configure environment variables**
+   Create `.env.local` with your Supabase credentials:
    ```bash
-   cp .env.example .env.local
-   ```
-   Update `.env.local` with your Supabase credentials:
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   # Supabase Configuration
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+
+   # Database Configuration (for edge functions)
+   SUPABASE_URL=https://your-project-id.supabase.co
+   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+
+   # Next.js Configuration
+   NEXT_PUBLIC_SITE_URL=http://localhost:3000
    ```
 
 5. **Run the development server**
