@@ -44,6 +44,12 @@ export default function Navbar({ user }: NavbarProps) {
                   Dashboard
                 </Link>
               )}
+              <Link
+                href="/navbar-test"
+                className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                Test
+              </Link>
               <span className="text-gray-400 px-3 py-2 rounded-md text-sm font-medium cursor-not-allowed">
                 My Trades
               </span>

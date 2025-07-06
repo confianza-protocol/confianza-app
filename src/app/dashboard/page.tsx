@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import TradeStatusBadge from '@/components/trade/TradeStatusBadge'</parameter>
 
 export const metadata: Metadata = {
   title: 'Dashboard - Confianza',
@@ -19,7 +20,7 @@ export default async function DashboardPage() {
     redirect('/login')
   }
 
-  // Fetch user profile and trust score
+  // Fetch user profile, trust score, and recent trades
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select(`
@@ -28,6 +29,21 @@ export default async function DashboardPage() {
     `)
     .eq('id', user.id)
     .single()
+
+  // Fetch recent trades
+  const { data: recentTrades } = await supabase
+    .from('trades')
+    .select(`
+      *,
+      offers!trades_offer_id_fkey (
+        crypto_asset,
+        fiat_currency,
+        price_per_crypto
+      )
+    `)
+    .or(`buyer_id.eq.${user.id},seller_id.eq.${user.id}`)
+    .order('created_at', { ascending: false })
+    .limit(5)
 
   if (profileError) {
     console.error('Error fetching profile:', profileError)
@@ -138,6 +154,40 @@ export default async function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Recent Trades */}
+      {recentTrades && recentTrades.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Recent Trades</h2>
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="divide-y divide-gray-200">
+              {recentTrades.map((trade) => (
+                <div key={trade.id} className="p-4 hover:bg-gray-50">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium text-gray-900">
+                        {trade.offers?.crypto_asset} → {trade.offers?.fiat_currency}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {trade.crypto_amount} {trade.offers?.crypto_asset} • {trade.fiat_amount.toLocaleString()} {trade.offers?.fiat_currency}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <TradeStatusBadge status={trade.status} />
+                      <Link
+                        href={`/trade/${trade.id}`}
+                        className="block text-sm text-blue-600 hover:text-blue-500 mt-1"
+                      >
+                        View Trade →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

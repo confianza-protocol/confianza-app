@@ -5,6 +5,12 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { createClient } from '@/lib/supabase/server'
+import { initSentry } from '@/lib/sentry'
+
+// Initialize Sentry
+if (typeof window !== 'undefined') {
+  initSentry()
+}</parameter>
 
 export const dynamic = 'force-dynamic'
 

@@ -106,9 +106,7 @@ export default function OfferCard({ offer }: OfferCardProps) {
       </div>
 
       {/* Action Button */}
-      <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">
-        Start Trade
-      </button>
+      <StartTradeButton offer={offer} />
     </div>
   )
 }
