@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Sentry } from '@/lib/sentry'
+import * as Sentry from '@sentry/nextjs'
 import { logger } from '@/lib/logger'
 
 export default function TestErrorPage() {
