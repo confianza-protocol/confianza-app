@@ -1,9 +1,14 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { type CookieOptions, type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
-export function createClient() {
-  const cookieStore = cookies()
-
+export function createClient(cookieStore: {
+  getAll: () => { name: string; value: string }[]
+  setAll: (cookiesToSet: Array<{
+    name: string
+    value: string
+    options?: Partial<CookieOptions>
+  }>) => void
+}) {
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -14,9 +19,7 @@ export function createClient() {
         },
         setAll(cookiesToSet) {
           try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
+            cookieStore.setAll(cookiesToSet)
           } catch {
             // The `setAll` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing

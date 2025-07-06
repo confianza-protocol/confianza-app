@@ -1,11 +1,13 @@
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
+import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import AuthButton from '@/components/auth/AuthButton'
 
 export default async function Navbar() {
-  const supabase = createClient()
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   const {
     data: { user },
   } = await supabase.auth.getUser()

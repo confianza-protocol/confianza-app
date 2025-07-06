@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { Metadata } from 'next'
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function CreateOfferPage() {
-  const supabase = createClient()
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
   
   const {
     data: { user },
