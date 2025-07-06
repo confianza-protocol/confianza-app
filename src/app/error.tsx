@@ -11,8 +11,6 @@ export default function Error({
   reset: () => void
 }) {
   useEffect(() => {
-    console.error(error)
-    
     // Capture the error to Sentry with additional context
     Sentry.captureException(error, {
       extra: {

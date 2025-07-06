@@ -47,12 +47,6 @@ export default function Navbar({ user }: NavbarProps) {
                   Dashboard
                 </Link>
               )}
-              <Link
-                href="/navbar-test"
-                className="text-text-secondary hover:text-text-primary px-3 py-2 rounded-button text-sm font-medium transition-colors duration-200"
-              >
-                Test
-              </Link>
             </div>
           </div>
 

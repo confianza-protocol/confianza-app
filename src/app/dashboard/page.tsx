@@ -52,7 +52,7 @@ export default async function DashboardPage() {
     .limit(5)
 
   if (profileError) {
-    console.error('Error fetching profile:', profileError)
+    // Error fetching profile - handle gracefully
   }
 
   return (

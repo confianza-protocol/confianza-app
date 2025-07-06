@@ -36,7 +36,7 @@ export default async function MarketPage() {
     .order('created_at', { ascending: false })
 
   if (error) {
-    console.error('Error fetching offers:', error)
+    // Error fetching offers - handle gracefully
   }
 
   return (

@@ -41,7 +41,6 @@ Deno.serve(async (req) => {
         })
 
       if (profileError) {
-        console.error('Error creating profile:', profileError)
         throw profileError
       }
 
@@ -61,11 +60,8 @@ Deno.serve(async (req) => {
         })
 
       if (trustScoreError) {
-        console.error('Error creating trust score:', trustScoreError)
         throw trustScoreError
       }
-
-      console.log(`Successfully created profile and trust score for user ${user.id}`)
     }
 
     return new Response(
@@ -76,9 +72,8 @@ Deno.serve(async (req) => {
       }
     )
   } catch (error) {
-    console.error('Error in handle-new-user function:', error)
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Unknown error' }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 400,

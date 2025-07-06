@@ -7,6 +7,7 @@ import StartTradeButton from './StartTradeButton'
 interface OfferCardProps {
   offer: {
     id: string
+    user_id: string
     crypto_asset: string
     fiat_currency: string
     price_per_crypto: number

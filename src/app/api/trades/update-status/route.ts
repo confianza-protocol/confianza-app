@@ -32,7 +32,11 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (fetchError || !trade) {
-      logger.error('Trade not found', fetchError, { tradeId, userId: user.id })
+      if (fetchError) {
+        logger.error('Trade not found', new Error(fetchError.message), { tradeId, userId: user.id })
+      } else {
+        logger.error('Trade not found', undefined, { tradeId, userId: user.id })
+      }
       return NextResponse.json({ error: 'Trade not found' }, { status: 404 })
     }
 
@@ -90,7 +94,7 @@ export async function POST(request: NextRequest) {
       .single()
 
     if (updateError) {
-      logger.error('Failed to update trade status', updateError, {
+      logger.error('Failed to update trade status', new Error(updateError.message), {
         tradeId,
         newStatus,
         userId: user.id
