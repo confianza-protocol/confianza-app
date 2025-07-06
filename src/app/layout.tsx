@@ -10,7 +10,7 @@ import { initSentry } from '@/lib/sentry'
 // Initialize Sentry
 if (typeof window !== 'undefined') {
   initSentry()
-}</parameter>
+}
 
 export const dynamic = 'force-dynamic'
 

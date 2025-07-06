@@ -21,4 +21,4 @@ module.exports = withSentryConfig(
     hideSourceMaps: true,
     disableLogger: true,
   }
-)</parameter>
+)
