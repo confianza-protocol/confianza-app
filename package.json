@@ -3,7 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "description": "The safest way to buy and sell crypto in Latin America",
-  "keywords": ["crypto", "p2p", "latin-america", "blockchain", "trust", "trading"],
+  "keywords": [
+    "crypto",
+    "p2p",
+    "latin-america",
+    "blockchain",
+    "trust",
+    "trading"
+  ],
   "author": "Confianza Protocol",
   "license": "MIT",
   "scripts": {
@@ -13,6 +20,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.50.3",
     "next": "^14.0.0",
     "react": "^18.0.0",
