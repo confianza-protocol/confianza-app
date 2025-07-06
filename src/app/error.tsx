@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import * as Sentry from '@sentry/nextjs'
 
 export default function Error({
   error,
@@ -11,6 +12,14 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error(error)
+    
+    // Capture the error to Sentry with additional context
+    Sentry.captureException(error, {
+      extra: {
+        digest: error.digest,
+        errorPage: true,
+      },
+    })
   }, [error])
 
   return (

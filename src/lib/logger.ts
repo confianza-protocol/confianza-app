@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/nextjs'
+
 interface LogEvent {
   level: 'info' | 'warn' | 'error' | 'debug'
   message: string
@@ -66,6 +68,14 @@ export class Logger {
     })
     
     console.error('[ERROR]', logEvent)
+    
+    // Only capture exceptions to Sentry (crucial part)
+    if (error) {
+      Sentry.captureException(error, {
+        extra: { ...logEvent, metadata },
+      })
+    }
+    
     this.sendToLogflare(logEvent)
   }
   
