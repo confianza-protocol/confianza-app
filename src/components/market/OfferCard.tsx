@@ -1,4 +1,8 @@
 import Link from 'next/link'
+import Card from '@/components/ui/Card'
+import TrustBadge from '@/components/ui/TrustBadge'
+import Button from '@/components/ui/Button'
+import StartTradeButton from './StartTradeButton'
 
 interface OfferCardProps {
   offer: {
@@ -29,84 +33,72 @@ export default function OfferCard({ offer }: OfferCardProps) {
     ? Math.round((trustScore.successful_trades / trustScore.total_trades) * 100)
     : 0
 
-  const getTrustColor = (tier: string) => {
-    switch (tier) {
-      case 'gold': return 'bg-yellow-500'
-      case 'silver': return 'bg-gray-400'
-      case 'bronze': return 'bg-amber-600'
-      default: return 'bg-gray-400'
-    }
-  }
-
   return (
-    <div className="bg-white rounded-lg shadow hover:shadow-md transition-shadow p-6">
+    <Card hover className="animate-slide-up">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-            <span className="text-blue-600 font-semibold text-sm">
+          <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-hover rounded-full flex items-center justify-center shadow-lg">
+            <span className="text-white font-semibold text-lg">
               {offer.profiles?.username?.charAt(0).toUpperCase() || 'U'}
             </span>
           </div>
           <div>
-            <p className="font-medium text-gray-900">{offer.profiles?.username || 'Unknown'}</p>
-            <div className="flex items-center space-x-2">
-              <div className={`w-3 h-3 rounded-full ${getTrustColor(trustScore?.tier || 'unverified')}`}></div>
-              <span className="text-sm text-gray-500 capitalize">{trustScore?.tier || 'Unverified'}</span>
-            </div>
+            <p className="font-semibold text-text-primary">{offer.profiles?.username || 'Unknown'}</p>
+            <TrustBadge tier={trustScore?.tier as any || 'unverified'} />
           </div>
         </div>
         <div className="text-right">
-          <p className="text-sm text-gray-500">Success Rate</p>
-          <p className="font-semibold text-green-600">{successRate}%</p>
+          <p className="body-small">Success Rate</p>
+          <p className="font-semibold text-success text-lg">{successRate}%</p>
         </div>
       </div>
 
       {/* Trading Pair */}
-      <div className="mb-4">
+      <div className="mb-6">
         <div className="flex items-center justify-between">
-          <span className="text-lg font-bold text-gray-900">
+          <span className="heading-4">
             {offer.crypto_asset} → {offer.fiat_currency}
           </span>
-          <span className="text-lg font-bold text-blue-600">
+          <span className="heading-4 text-primary">
             {offer.price_per_crypto.toLocaleString()} {offer.fiat_currency}
           </span>
         </div>
-        <p className="text-sm text-gray-500">per {offer.crypto_asset}</p>
+        <p className="body-small">per {offer.crypto_asset}</p>
       </div>
 
       {/* Limits */}
-      <div className="mb-4 space-y-2">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Min Trade:</span>
-          <span className="font-medium">{offer.min_trade_limit.toLocaleString()} {offer.fiat_currency}</span>
+      <div className="mb-6 space-y-3">
+        <div className="flex justify-between">
+          <span className="body-small">Min Trade:</span>
+          <span className="font-medium text-text-primary">{offer.min_trade_limit.toLocaleString()} {offer.fiat_currency}</span>
         </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Max Trade:</span>
-          <span className="font-medium">{offer.max_trade_limit.toLocaleString()} {offer.fiat_currency}</span>
+        <div className="flex justify-between">
+          <span className="body-small">Max Trade:</span>
+          <span className="font-medium text-text-primary">{offer.max_trade_limit.toLocaleString()} {offer.fiat_currency}</span>
         </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Available:</span>
-          <span className="font-medium">{offer.available_amount} {offer.crypto_asset}</span>
+        <div className="flex justify-between">
+          <span className="body-small">Available:</span>
+          <span className="font-medium text-text-primary">{offer.available_amount} {offer.crypto_asset}</span>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+      <div className="mb-6 p-4 bg-background rounded-button border border-border">
         <div className="grid grid-cols-2 gap-4 text-center">
           <div>
-            <p className="text-sm text-gray-500">Total Trades</p>
-            <p className="font-semibold">{trustScore?.total_trades || 0}</p>
+            <p className="body-small">Total Trades</p>
+            <p className="font-semibold text-text-primary text-lg">{trustScore?.total_trades || 0}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500">Positive Reviews</p>
-            <p className="font-semibold text-green-600">{trustScore?.positive_feedback || 0}</p>
+            <p className="body-small">Positive Reviews</p>
+            <p className="font-semibold text-success text-lg">{trustScore?.positive_feedback || 0}</p>
           </div>
         </div>
       </div>
 
       {/* Action Button */}
       <StartTradeButton offer={offer} />
-    </div>
+    </Card>
   )
 }

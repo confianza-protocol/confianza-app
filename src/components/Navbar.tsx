@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import AuthButton from '@/components/auth/AuthButton'
 import { User } from '@supabase/supabase-js'
+import Button from '@/components/ui/Button'
+import AuthButton from '@/components/auth/AuthButton'
 
 interface NavbarProps {
   user: User | null
@@ -8,55 +9,54 @@ interface NavbarProps {
 
 export default function Navbar({ user }: NavbarProps) {
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="bg-background border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-background/95">
+      <div className="container-main">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="flex items-center">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
+            <Link href="/" className="flex items-center group">
+              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary-hover rounded-lg flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-200">
+                <span className="text-white font-bold text-xl">C</span>
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900">Confianza</span>
+              <span className="ml-3 text-2xl font-bold text-text-primary group-hover:text-primary transition-colors duration-200">
+                Confianza
+              </span>
             </Link>
           </div>
 
-          {/* Navigation Links - Placeholder for future features */}
+          {/* Navigation Links */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
+            <div className="ml-10 flex items-baseline space-x-8">
               <Link 
                 href="/" 
-                className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="text-text-secondary hover:text-text-primary px-3 py-2 rounded-button text-sm font-medium transition-colors duration-200"
               >
                 Home
               </Link>
               <Link
                 href="/market"
-                className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="text-text-secondary hover:text-text-primary px-3 py-2 rounded-button text-sm font-medium transition-colors duration-200"
               >
                 Marketplace
               </Link>
               {user && (
                 <Link
                   href="/dashboard"
-                  className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-text-secondary hover:text-text-primary px-3 py-2 rounded-button text-sm font-medium transition-colors duration-200"
                 >
                   Dashboard
                 </Link>
               )}
               <Link
                 href="/navbar-test"
-                className="text-gray-900 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                className="text-text-secondary hover:text-text-primary px-3 py-2 rounded-button text-sm font-medium transition-colors duration-200"
               >
                 Test
               </Link>
-              <span className="text-gray-400 px-3 py-2 rounded-md text-sm font-medium cursor-not-allowed">
-                My Trades
-              </span>
             </div>
           </div>
 
-          {/* Auth Buttons - Placeholder */}
+          {/* Auth Buttons */}
           <AuthButton user={user} />
         </div>
       </div>
